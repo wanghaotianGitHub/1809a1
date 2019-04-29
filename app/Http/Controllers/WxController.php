@@ -218,19 +218,19 @@ class WxController extends Controller{
                 array(
                     'name'=>"最新福利",
                     "type"=>"click",
-                    "url"=>"https://www.baidu.com/",
-//                    "sub_button"=>array(
-//                        array(
-//                            "type"=>"",
-//                            "name"=>"大娃娃",
-//                            "key"=>"iii"
-//                        ),
-//                        array(
-//                            "type"=>"click",
-//                            "name"=>"小娃娃",
-//                            "key"=>"iii"
-//                        ),
-//                    ),
+                    "key"=>"aaaaa",
+                    "sub_button"=>array(
+                        array(
+                            "type"=>"",
+                            "name"=>"大娃娃",
+                            "key"=>"iii"
+                        ),
+                        array(
+                            "type"=>"click",
+                            "name"=>"小娃娃",
+                            "key"=>"iii"
+                        ),
+                    ),
                 ),
                 array(
                     'name'=>"玩具",

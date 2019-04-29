@@ -25,7 +25,6 @@ class ComController extends Controller
             return $accessToken;
         }
     }
-
     public function shop(){
 //        echo __METHOD__;die;
         $content = file_get_contents("php://input");
@@ -51,10 +50,6 @@ class ComController extends Controller
         $name = $arr['nickname'];
         $openid = $arr['openid'];
         $date = DB::table('user')->where('openid',$openid)->count();
-
-
-
-
         if($MsgType=='image'){
             $url="https://api.weixin.qq.com/cgi-bin/media/get?access_token=$accessToken&media_id=$MediaId";
             $response = file_get_contents($url);
