@@ -16,8 +16,8 @@ class WxController extends Controller{
         $time = date('Y-m-d H:i:s');
         $str = $time . $content . "\n";
         file_put_contents("logs/wx_event.log",$str,FILE_APPEND);
-
         $objxml = simplexml_load_string($content);
+
         $ToUserName = $objxml->ToUserName;
         $FromUserName = $objxml->FromUserName;
         $CreateTime = $objxml->CreateTime;
@@ -40,8 +40,8 @@ class WxController extends Controller{
             $good = DB::table('shop_goods')->where('goods_up',1)->orderBy('create_time','desc')->first();
             $good_name = $good->goods_name;
             $title = "秀儿";
-            $picurl = "http://1809lancong.comcto.com/goodsimg/$good->goods_img";
-            $url = "http://1809lancong.comcto.com/goodDetail";
+            $picurl = "http://1809wanghaotian.comcto.com/goodsimg/$good->goods_img";
+            $url = "http://1809wanghaotian.comcto.com/goodDetail";
             $str = "<xml>
                           <ToUserName><![CDATA[$FromUserName]]></ToUserName>
                           <FromUserName><![CDATA[$ToUserName]]></FromUserName>
@@ -152,8 +152,8 @@ class WxController extends Controller{
                 $good = DB::table('shop_goods')->where('goods_up',1)->orderBy('create_time','desc')->first();
                 $good_name = $good->goods_name;
                 $title = "秀儿";
-                $picurl = "http://1809lancong.comcto.com/goodsimg/$good->goods_img";
-                $url = "http://1809lancong.comcto.com/goodDetail";
+                $picurl = "http://1809wanghaotian.comcto.com/goodsimg/$good->goods_img";
+                $url = "http://1809wanghaotian.comcto.com/goodDetail";
                 $str = "<xml>
                           <ToUserName><![CDATA[$FromUserName]]></ToUserName>
                           <FromUserName><![CDATA[$ToUserName]]></FromUserName>
@@ -216,22 +216,21 @@ class WxController extends Controller{
         $arr = array(
             "button"=> array(
                 array(
-                    'name'=>"葫芦娃娃",
+                    'name'=>"最新福利",
                     "type"=>"click",
                     "key"=>"aaaaa",
-                    "sub_button"=>array(
-                        array(
-                            "type"=>"click",
-                            "name"=>"大娃娃",
-                            "key"=>"iii"
-                        ),
-                        array(
-                            "type"=>"click",
-                            "name"=>"小娃娃",
-                            "key"=>"iii"
-                        ),
-                    ),
-
+//                    "sub_button"=>array(
+//                        array(
+//                            "type"=>"",
+//                            "name"=>"大娃娃",
+//                            "key"=>"iii"
+//                        ),
+//                        array(
+//                            "type"=>"click",
+//                            "name"=>"小娃娃",
+//                            "key"=>"iii"
+//                        ),
+//                    ),
                 ),
                 array(
                     'name'=>"玩具",
@@ -305,9 +304,8 @@ class WxController extends Controller{
 //        print_r($res_str);die;
         echo $res_str;
     }
-
     public $weixin_unifiedorder_url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';        // 统一下单接口
-    public $notify_url = 'http://1809lancong.comcto.com/notify'; // 支付回调
+    public $notify_url = 'http://1809wanghaotian.comcto.com/notify'; // 支付回调
     public function test(){
         $total_fee = 1;         //用户要支付的总金额
 //        $order=DB::table('shop_order')->first();
@@ -453,7 +451,6 @@ class WxController extends Controller{
         $response = '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
         echo $response;
     }
-
     /**
      * 用户授权
      */
@@ -463,21 +460,16 @@ class WxController extends Controller{
         $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('WX_APPID').'&redirect_uri='.$url.'&response_type=code&scope='.$scope.'&state=STATE#wechat_redirect';
         return view('weixin.give',['url'=>$url]);
     }
-
     public function code(){
         $code = $_GET['code'];
         $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.env('WX_APPID').'&secret='.env('WX_SECRET').'&code='.$code.'&grant_type=authorization_code';
         $responser = json_decode(file_get_contents($url),true);
-
         $accessToken = $responser['access_token'];
         $openid = $responser['openid'];
-
         $url = "https://api.weixin.qq.com/sns/userinfo?access_token=$accessToken&openid=$openid&lang=zh_CN";
         $responser = json_decode(file_get_contents($url),true);
-
         $openid = $responser['openid'];
         $arr = DB::table('give')->where('openid',$openid)->first();
-
         if($arr){
             echo "欢迎回来";
         }else{
@@ -489,8 +481,6 @@ class WxController extends Controller{
             DB::table('give')->insert($data);
             echo "欢迎";
         }
-
-
     }
     public function JsapiTicket()
     {
@@ -502,7 +492,6 @@ class WxController extends Controller{
             $accessToken = $this->accessToken();
             $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=$accessToken&type=jsapi";
             $jsapi_ticket = json_decode(file_get_contents($url), true);
-
             if (isset($jsapi_ticket['ticket'])) {
                 Redis::set($key, $jsapi_ticket['ticket']);
                 Redis::expire($key, 3600);

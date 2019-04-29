@@ -42,7 +42,6 @@ class GoodsController extends Controller{
         ];
         return view('goods.detail',['good'=>$good,'js_config'=>$js_config,'arr'=>$arr]);
     }
-
     public function JsapiTicket()
     {
         $key = 'wx_jsapi_ticket';
@@ -81,7 +80,6 @@ class GoodsController extends Controller{
             return $accessToken;
         }
     }
-
     /**
      * 生成带参数的二维码
      */
@@ -108,7 +106,6 @@ class GoodsController extends Controller{
 //        print_r($url);die;
         header('Location:'.$url);
     }
-
     public function goodList(){
         $arr = DB::table('shop_goods')->where('goods_up',1)->get()->toArray();
         return view('goods.goodsList',['arr'=>$arr]);
