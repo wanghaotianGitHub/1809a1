@@ -217,8 +217,8 @@ class WxController extends Controller{
             "button"=> array(
                 array(
                     'name'=>"最新福利",
-                    "type"=>"https://www.baidu.com/",
-                    "key"=>"aaaaa",
+                    "type"=>"click",
+                    "url"=>"https://www.baidu.com/",
 //                    "sub_button"=>array(
 //                        array(
 //                            "type"=>"",
